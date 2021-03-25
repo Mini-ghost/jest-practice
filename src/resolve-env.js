@@ -2,8 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const dotenv = require('dotenv')
 
-const PREFIX_RE = /^process.env./
-
 /**
  * 取得環境變數物件
  * 
@@ -28,6 +26,7 @@ const getEnvs = function getEnvs (path, ...arg) {
  * @see https://webpack.js.org/plugins/define-plugin/#usage
  */
 const handleValueFormate = function handleValueFormate (variables) {
+  const PREFIX_RE = /^process.env./
   const formatted = Object.keys(variables).reduce(function reducekey (obj, key) {
     /**
      * 在所有 key 直前面直前面加上 `process.env` 才能將環境變數注入到 webpack 中。
@@ -48,8 +47,10 @@ const handleValueFormate = function handleValueFormate (variables) {
  * @param {Object} [parsed]  從 webpack 自定義的環境變數
  * @returns {Object}         環境變數物件
  */
-const resolveEnvVariable = function resolveEnvVariable (parsed = {}) {
-  const root = process.cwd()
+const resolveEnvVariable = function resolveEnvVariable (
+  parsed = {}, 
+  root = process.cwd()
+) {
   const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
   try {
