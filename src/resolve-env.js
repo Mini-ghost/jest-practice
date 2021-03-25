@@ -48,8 +48,10 @@ const handleValueFormate = function handleValueFormate (variables) {
  * @param {Object} [parsed]  從 webpack 自定義的環境變數
  * @returns {Object}         環境變數物件
  */
-const resolveEnvVariable = function resolveEnvVariable (parsed = {}) {
-  const root = process.cwd()
+const resolveEnvVariable = function resolveEnvVariable (
+  parsed = {}, 
+  root = process.cwd()
+) {
   const env = process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 
   try {
