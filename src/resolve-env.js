@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const dotenv = require('dotenv')
 
+const PREFIX_RE = /^process.env./
+
 /**
  * 取得環境變數物件
  * 
@@ -31,7 +33,8 @@ const handleValueFormate = function handleValueFormate (variables) {
      * 在所有 key 直前面直前面加上 `process.env` 才能將環境變數注入到 webpack 中。
      * @see https://github.com/rollup/rollup/issues/487#issuecomment-177596512
      */
-    obj[`process.env.${key}`] = JSON.stringify(variables[key])
+    const envKey = !PREFIX_RE.test(key) ? `process.env.${key}` : key
+    obj[envKey] = JSON.stringify(variables[key])
 
     return obj
   }, {})
