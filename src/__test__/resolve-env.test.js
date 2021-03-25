@@ -1,4 +1,5 @@
-const resolveEnvVariable = require('./resolve-env')
+const path = require('path')
+const resolveEnvVariable = require('../resolve-env')
 
 test('get env object pass value type is string', () => {
   const env = { type: 'test' }
@@ -32,7 +33,13 @@ test('get env object when pass key have prefix \'process.env.\'', () => {
   expect(resolveEnvVariable(env)).toEqual({ 
     'process.env.type': '"test"' 
   })
-}) 
+})
+
+test('get env object when have .env file', () => {
+  expect(resolveEnvVariable({}, __dirname)).toEqual({ 
+    'process.env.FILE_NAME': '"env"' 
+  })
+})
 
 test('get empty env object when pass undefined', () => {
   expect(resolveEnvVariable()).toEqual({})
