@@ -24,6 +24,16 @@ test('get env object pass value type is boolean', () => {
   })
 })
 
+test('get env object when pass key have prefix \'process.env.\'', () => {
+  const env = {
+    'process.env.type': 'test' 
+  }
+
+  expect(resolveEnvVariable(env)).toEqual({ 
+    'process.env.type': '"test"' 
+  })
+}) 
+
 test('get empty env object when pass undefined', () => {
   expect(resolveEnvVariable()).toEqual({})
 })
